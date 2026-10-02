@@ -1,7 +1,8 @@
-import garden from '@/assets/AnhSP2.jpg'
-import loft from '@/assets/AnhSP.jpg'
-import mint from '@/assets/AnhSp3.jpg'
-import bamboo from '@/assets/AnhSP4.jpg'
+// tên file mô tả nội dung ảnh (giúp Google Hình ảnh hiểu ảnh)
+import garden from '@/assets/san-vuon-ghe-go-tinh-house.jpg'
+import loft from '@/assets/phong-canh-giuong-go-tinh-house.jpg'
+import mint from '@/assets/phong-suong-rem-xanh-tinh-house.jpg'
+import bamboo from '@/assets/phong-tre-man-trang-tinh-house.jpg'
 
 // import tĩnh: next/image tự biết kích thước, tạo nhiều cỡ ảnh và ảnh mờ chờ tải
 export const IMAGES = { garden, loft, mint, bamboo }
@@ -115,6 +116,16 @@ export const FAQS = [
     a: 'TỊNH House ở đường Nguyễn Trung Trực, gần trung tâm Dương Đông, cách sân bay Phú Quốc khoảng 15 phút đi xe. Khi đặt phòng, chủ nhà sẽ gửi vị trí Google Maps qua Zalo.',
   },
 ]
+
+// địa chỉ trang web — dùng cho canonical, sitemap, ảnh chia sẻ, dữ liệu có cấu trúc.
+// Khi có tên miền riêng chỉ cần đổi ở đây.
+export const SITE_URL = 'https://next-project-nine-eta.vercel.app'
+export const SITE_NAME = 'TỊNH House'
+export const SITE_DESCRIPTION =
+  'TỊNH House – homestay giữa vườn cây xanh ở Phú Quốc. Phòng gỗ, tre, cửa kính nhìn ra vườn, gần trung tâm Dương Đông. Đặt phòng qua Zalo 0389 733 426.'
+
+// tọa độ lấy từ link Google Maps của TỊNH House
+export const GEO = { lat: 10.2271407, lng: 103.9777362 }
 
 const ADDRESS = '320a Nguyễn Trung Trực, Phú Quốc, An Giang'
 

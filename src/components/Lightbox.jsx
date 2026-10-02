@@ -18,7 +18,7 @@ export function LightboxProvider({ children }) {
 }
 
 /* Ảnh bấm được để xem toàn màn hình. `photo` là vị trí trong PHOTOS */
-export function Photo({ photo, className, sizes = '(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw', ...rest }) {
+export function Photo({ photo, className, sizes, ...rest }) {
   const open = useContext(LightboxContext)
   const { src, alt } = PHOTOS[photo]
   const onKeyDown = (e) => {
@@ -32,6 +32,7 @@ export function Photo({ photo, className, sizes = '(max-width: 640px) 100vw, (ma
       src={src}
       alt={alt}
       sizes={sizes}
+      quality={70}
       placeholder="blur"
       className={`zoomable${className ? ` ${className}` : ''}`}
       role="button"

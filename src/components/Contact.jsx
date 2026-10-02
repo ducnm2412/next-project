@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { CONTACT, ROOMS } from '../data'
 import { Branch } from './Decor'
 import Flora from './Flora'
@@ -7,6 +7,48 @@ import Flora from './Flora'
 const noopSubscribe = () => () => {}
 const getToday = () => new Date().toISOString().slice(0, 10)
 const getServerToday = () => undefined
+
+/*
+ * Bản đồ Google nhúng kéo theo ~400 KiB JavaScript của Google. Chỉ tạo iframe khi
+ * khung bản đồ sắp vào màn hình (trên điện thoại: khi mở tab "Liên hệ & bản đồ"),
+ * trước đó hiện một khung giữ chỗ cùng kích thước.
+ */
+function LazyMap({ src, title, link }) {
+  const ref = useRef(null)
+  const [show, setShow] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || show) return
+    if (typeof IntersectionObserver !== 'function') {
+      // trình duyệt quá cũ: tải luôn
+      const id = setTimeout(() => setShow(true), 0)
+      return () => clearTimeout(id)
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShow(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '300px 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [show])
+
+  return (
+    <div ref={ref} className="contact__map">
+      {show ? (
+        <iframe src={src} title={title} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+      ) : (
+        <a className="contact__map-placeholder" href={link} target="_blank" rel="noreferrer">
+          Đang tải bản đồ… (bấm để mở Google Maps)
+        </a>
+      )}
+    </div>
+  )
+}
 
 const PHONE_RE = /^(0|\+84)\d{9,10}$/
 
@@ -109,14 +151,7 @@ export default function Contact({ booking, setBooking }) {
                 <dd>{CONTACT.hours}</dd>
               </div>
             </dl>
-            <iframe
-              className="contact__map"
-              src={CONTACT.mapEmbed}
-              title="Bản đồ đường đến Tịnh House"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
+            <LazyMap src={CONTACT.mapEmbed} title="Bản đồ đường đến Tịnh House" link={CONTACT.maps} />
           </div>
 
           <div className={`booking-card${tab === 'form' ? '' : ' is-inactive'}`}>

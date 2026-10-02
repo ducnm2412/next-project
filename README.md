@@ -29,6 +29,14 @@ Thử trên điện thoại cùng mạng Wi-Fi: `npm run dev -- -H 0.0.0.0`, r�
 | `src/assets/` | Ảnh dùng trên trang (được `next/image` tối ưu tự động) |
 | `design-assets/` | File logo gốc, không đưa lên web |
 
+## SEO
+
+- Tên miền, tên và mô tả trang: `SITE_URL`, `SITE_NAME`, `SITE_DESCRIPTION` trong `src/data.js`. Có tên miền riêng thì đổi `SITE_URL`, mọi thứ khác (canonical, sitemap, ảnh chia sẻ, dữ liệu có cấu trúc) tự cập nhật.
+- Ảnh khi chia sẻ link (Facebook, Zalo…): `src/app/opengraph-image.jpg` (1200×630), chữ mô tả trong `opengraph-image.alt.txt`.
+- `src/app/robots.js`, `src/app/sitemap.js`: tạo `/robots.txt`, `/sitemap.xml`.
+- Dữ liệu có cấu trúc (schema.org `LodgingBusiness`): `src/app/page.js`. Không thêm đánh giá/điểm sao vào đây khi đánh giá chưa phải là thật.
+- Sau khi deploy: khai báo trang trong Google Search Console và gửi `https://<tên miền>/sitemap.xml`.
+
 ## Trước khi đưa lên mạng
 
 - Thay nội dung mẫu trong `src/data.js`: giá phòng, số liệu (4.9 / 5+), đánh giá (chỉ dùng nhận xét thật), câu trả lời FAQ.

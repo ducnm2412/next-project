@@ -1,13 +1,22 @@
 import Image from 'next/image'
 import { IMAGES, MARQUEE } from '../data'
-import logo from '@/assets/logo-tinh-light.png'
+import logo from '@/assets/logo-tinh-house.png'
 import { FallingLeaves } from './Decor'
 
 export default function Hero() {
   return (
     <section className="hero" id="top">
       <div className="hero__media">
-        <Image className="hero__bg" src={IMAGES.bamboo} alt="" fill sizes="100vw" preload placeholder="blur" />
+        <Image
+          className="hero__bg"
+          src={IMAGES.bamboo}
+          alt=""
+          fill
+          sizes="(max-width: 1024px) 100vw, max(100vw, 142vh)"
+          quality={60}
+          preload
+          placeholder="blur"
+        />
         <div className="hero__shade" aria-hidden="true" />
         <div className="hero__light" aria-hidden="true" />
         <FallingLeaves />

@@ -5,6 +5,19 @@ import useCarousel from '../hooks/useCarousel'
 import { Photo } from './Lightbox'
 import Flora from './Flora'
 
+/*
+ * Chiều rộng hiển thị thật của từng ảnh (đo ở các khổ màn hình) để trình duyệt
+ * tải đúng cỡ — khớp với bố cục trong styles/site.css. Đổi bố cục thì sửa ở đây.
+ */
+// (không dùng min() trong sizes: Next.js không đọc được vw bên trong và trình duyệt cũ không hỗ trợ)
+const SIZES = {
+  aboutA: '(max-width: 640px) 50vw, (max-width: 960px) 250px, (max-width: 1160px) 22vw, 256px',
+  aboutB: '(max-width: 640px) 42vw, (max-width: 960px) 206px, (max-width: 1140px) 19vw, 216px',
+  room: '(max-width: 640px) calc(100vw - 56px), (max-width: 960px) 316px, (max-width: 1200px) 29vw, 350px',
+  exp: '(max-width: 960px) 92vw, (max-width: 1140px) 38vw, 433px',
+  gallery: '(max-width: 960px) 48vw, (max-width: 1166px) 24vw, 280px',
+}
+
 const STATS = [{ value: String(ROOMS.length).padStart(2, '0'), label: 'Phòng nghỉ' }, ...STATS_SAMPLE]
 
 export function About() {
@@ -15,8 +28,8 @@ export function About() {
         <Flora preset="about" />
         <div className="container about__grid">
           <div className="about__media">
-            <Photo className="arch about__img-a" photo={PHOTO_INDEX.garden} />
-            <Photo className="arch about__img-b" photo={PHOTO_INDEX.loft} />
+            <Photo className="arch about__img-a" photo={PHOTO_INDEX.garden} sizes={SIZES.aboutA} />
+            <Photo className="arch about__img-b" photo={PHOTO_INDEX.loft} sizes={SIZES.aboutB} />
           </div>
 
           <div className="about__text">
@@ -92,7 +105,7 @@ export function Rooms({ onBook }) {
                 aria-label={`${i + 1} / ${ROOMS.length}`}
               >
                 <div className="room-card__media">
-                  <Photo className="arch" photo={PHOTO_INDEX[room.photo]} aria-label={`Xem ảnh lớn: ${room.name}`} />
+                  <Photo className="arch" photo={PHOTO_INDEX[room.photo]} sizes={SIZES.room} aria-label={`Xem ảnh lớn: ${room.name}`} />
                 </div>
                 <span className="badge">{room.badge}</span>
                 <h3 className="room-card__name">{room.name}</h3>
@@ -154,7 +167,7 @@ export function Experience() {
               </div>
             </div>
             <div className="exp-panel__media">
-              <Photo className="arch" photo={PHOTO_INDEX.garden} />
+              <Photo className="arch" photo={PHOTO_INDEX.garden} sizes={SIZES.exp} />
               <span className="sticker" aria-hidden="true">
                 Sống chậm thôi!
               </span>
@@ -183,10 +196,10 @@ export function Gallery() {
             </a>
           </div>
           <div className="gallery__grid">
-            <Photo className="arch g-a" photo={PHOTO_INDEX.mint} />
-            <Photo className="g-b" photo={PHOTO_INDEX.garden} />
-            <Photo className="arch g-c" photo={PHOTO_INDEX.bamboo} />
-            <Photo className="g-d" photo={PHOTO_INDEX.loft} />
+            <Photo className="arch g-a" photo={PHOTO_INDEX.mint} sizes={SIZES.gallery} />
+            <Photo className="g-b" photo={PHOTO_INDEX.garden} sizes={SIZES.gallery} />
+            <Photo className="arch g-c" photo={PHOTO_INDEX.bamboo} sizes={SIZES.gallery} />
+            <Photo className="g-d" photo={PHOTO_INDEX.loft} sizes={SIZES.gallery} />
           </div>
         </div>
       </section>
