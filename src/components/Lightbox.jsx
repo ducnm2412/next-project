@@ -33,7 +33,6 @@ export function Photo({ photo, className, sizes, ...rest }) {
       alt={alt}
       sizes={sizes}
       quality={70}
-      placeholder="blur"
       className={`zoomable${className ? ` ${className}` : ''}`}
       role="button"
       tabIndex={0}

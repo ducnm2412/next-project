@@ -4,18 +4,23 @@ import '@/styles/site.css'
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/data'
 
 // font tự lưu trên website (next/font) — không tải từ Google lúc người xem mở trang
+// Chỉ tải trước font chữ chính (bộ Latin). Các font/bộ ký tự khác vẫn có đủ và tải
+// khi trang cần (unicode-range) — không tranh băng thông với ảnh hero lúc mở trang.
 const sans = Be_Vietnam_Pro({
-  subsets: ['latin', 'vietnamese'],
-  weight: ['400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  preload: true,
+  // chỉ các độ đậm thật sự dùng — mỗi độ đậm là một file font phải tải
+  weight: ['400', '600', '700', '800'],
   variable: '--font-sans',
 })
-const serif = Lora({ subsets: ['latin', 'vietnamese'], weight: '400', variable: '--font-serif' })
+const serif = Lora({ subsets: ['latin', 'vietnamese'], weight: '400', variable: '--font-serif', preload: false })
 const brandSerif = Cormorant_Garamond({
   subsets: ['latin', 'vietnamese'],
   weight: '700',
   variable: '--font-brand-serif',
+  preload: false,
 })
-const brandScript = Sacramento({ subsets: ['latin'], weight: '400', variable: '--font-brand-script' })
+const brandScript = Sacramento({ subsets: ['latin'], weight: '400', variable: '--font-brand-script', preload: false })
 
 const TITLE = 'TỊNH House – Homestay giữa vườn xanh ở Phú Quốc'
 

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Blossoms, Branch } from './Decor'
 
 const LEAF = 'M0 0C7-6 19-7 28 0C19 7 7 6 0 0Z'
@@ -92,7 +93,28 @@ const PRESETS = {
   ],
 }
 
+/*
+ * Hoa lá chỉ để trang trí nhưng chiếm ~40% phần tử của trang. Vẽ chúng sau khi
+ * trình duyệt rảnh để React không phải xử lý lúc trang vừa tải (giảm thời gian
+ * chặn luồng chính, chữ và ảnh chính hiện sớm hơn).
+ */
+function useIdleReady() {
+  const [ready, setReady] = useState(false)
+  useEffect(() => {
+    const ric = window.requestIdleCallback
+    if (ric) {
+      const id = ric(() => setReady(true), { timeout: 2500 })
+      return () => window.cancelIdleCallback(id)
+    }
+    const id = setTimeout(() => setReady(true), 1200)
+    return () => clearTimeout(id)
+  }, [])
+  return ready
+}
+
 export default function Flora({ preset }) {
+  const ready = useIdleReady()
+  if (!ready) return <div className="flora" aria-hidden="true" />
   return (
     <div className="flora" aria-hidden="true">
       {PRESETS[preset].map((item, i) => {

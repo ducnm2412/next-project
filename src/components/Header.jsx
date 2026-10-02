@@ -8,9 +8,14 @@ export default function Header() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
+    // lần đọc đầu để sang khung hình kế tiếp: ngay lúc gắn tương tác các phần khác
+    // vừa đổi class, đọc vị trí cuộn lúc đó buộc trình duyệt tính lại bố cục
+    const frame = requestAnimationFrame(onScroll)
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   useEffect(() => {

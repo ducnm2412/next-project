@@ -15,7 +15,6 @@ export default function Hero() {
           sizes="(max-width: 1024px) 100vw, max(100vw, 142vh)"
           quality={60}
           preload
-          placeholder="blur"
         />
         <div className="hero__shade" aria-hidden="true" />
         <div className="hero__light" aria-hidden="true" />

@@ -214,6 +214,14 @@
   opacity: 0.7;
 }
 
+/* hoa lá được vẽ sau khi trang đã tải xong (Flora.jsx) — hiện dần cho êm */
+.flora__item {
+  animation: flora-in 1.2s ease-out both;
+}
+@keyframes flora-in {
+  from { opacity: 0; }
+}
+
 /* ---------- Header ---------- */
 .header {
   position: fixed;
@@ -276,7 +284,7 @@
 }
 .nav a {
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--on-dark-soft);
   text-decoration: none;
   transition: color 0.2s;
@@ -321,6 +329,7 @@
   height: 100%;
 }
 .hero__bg {
+  background-color: var(--green-800);
   object-fit: cover;
   object-position: center 55%;
   animation: drift-zoom 18s ease-in-out infinite alternate;
@@ -374,7 +383,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  animation: rise 0.9s ease-out both;
+  /* không làm mờ: phần tử trong suốt không được tính là "đã hiện" (LCP) */
+  animation: nudge-up 0.9s ease-out both;
 }
 .hero__logo {
   width: clamp(190px, 28vw, 360px);
@@ -403,9 +413,9 @@
   font-size: 1rem;
   opacity: 0.9;
 }
-@keyframes rise {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
+@keyframes nudge-up {
+  from { transform: translateY(14px); }
+  to { transform: none; }
 }
 /* gợi ý cuộn xuống */
 .hero__scroll {
@@ -1135,6 +1145,8 @@
 /* ---------- Xem ảnh toàn màn hình ---------- */
 .zoomable {
   cursor: zoom-in;
+  /* màu nền trơn trong lúc ảnh tải — rẻ hơn nhiều so với ảnh mờ (bộ lọc SVG) của next/image */
+  background-color: var(--green-800);
 }
 .zoomable:focus-visible {
   outline: 3px solid var(--lime);
